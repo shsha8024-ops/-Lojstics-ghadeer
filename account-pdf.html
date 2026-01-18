@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>كشف حساب رسمي | شركة الغدير للنقل والتخليص الكمركي</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+
+<style>
+@page { size: A4; margin: 1.5cm; }
+
+body {
+  font-family: "Cairo", sans-serif;
+  background: #fff;
+  color: #000;
+  direction: rtl;
+  margin: 0;
+  padding: 2rem;
+}
+
+/* ===== الهيدر ===== */
+header {
+  text-align: center;
+  border-bottom: 3px solid #c2a356;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+header img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+}
+header h1 {
+  margin: 0;
+  color: #004b95;
+  font-size: 1.6rem;
+}
+header p {
+  color: #000;
+  font-weight: 500;
+  margin: 0.2rem 0;
+}
+
+/* زر الرجوع */
+.back-btn {
+  position: absolute;
+  right: 2rem;
+  top: 1rem;
+  background: linear-gradient(90deg,#004b95,#008d5f);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.back-btn:hover { opacity: 0.8; }
+
+/* ===== العنوان ===== */
+h2 {
+  text-align: center;
+  color: #004b95;
+  border-bottom: 2px solid #c2a356;
+  display: inline-block;
+  padding-bottom: 6px;
+  margin: 1rem auto 0.5rem;
+}
+
+/* ===== الفترة ===== */
+.period {
+  text-align: center;
+  color: #b9973e;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* ===== الجداول ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 1px solid #ccc;
+  margin-bottom: 1.5rem;
+}
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+  color: #000;
+}
+th {
+  background: #f2f6fb;
+  color: #000;
+  font-weight: bold;
+}
+tfoot td {
+  background: #fffbea;
+  font-weight: bold;
+}
+
+/* ===== منع انقسام الصفوف عند الطباعة ===== */
+table, tr, td, th { page-break-inside: avoid; }
+
+/* ===== الملخص ===== */
+.summary {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 1.1rem;
+}
+.summary p {
+  margin: 5px 0;
+  color: #000;
+}
+.summary strong {
+  color: #004b95;
+  font-size: 1.1rem;
+}
+
+/* ===== الأزرار ===== */
+.print-btn, .save-pdf {
+  display: inline-block;
+  margin: 1rem 8px;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.print-btn {
+  background: linear-gradient(90deg,#b9973e,#f0cd63);
+  color: #000;
+}
+.save-pdf {
+  background: linear-gradient(90deg,#004b95,#008d5f);
+  color: #fff;
+}
+.print-btn:hover, .save-pdf:hover { opacity: 0.85; }
+
+/* ===== الفوتر ===== */
+footer {
+  text-align: center;
+  border-top: 2px solid #c2a356;
+  padding-top: 10px;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: #000;
+}
+
+/* ===== عند الطباعة ===== */
+@media print {
+  .print-btn, .save-pdf, .back-btn { display: none; }
+  body { 
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <button class="back-btn" onclick="window.location.href='client-account.html'">🔙 رجوع</button>
+  <img src="ghadeer-logo.png" alt="ghadeer logo">
+  <h1>شركة الغدير للنقل والتخليص الكمركي</h1>
+  <p>زاخو – إبراهيم الخليل</p>
+  <p>📞 07504084359 • 📧 starzeki001@gmail.com</p>
+</header>
+
+<h2 id="clientName">كشف حساب العميل</h2>
+<p class="period" id="periodText"></p>
+
+<h3>📦 الوصولات</h3>
+<table id="t1">
+  <thead>
+    <tr><th>رقم الوصل</th><th>التاريخ</th><th>البيان</th><th>المبلغ ($)</th></tr>
+  </thead>
+  <tbody></tbody>
+  <tfoot><tr><td colspan="3">مجموع الوصولات</td><td id="sum1">0$</td></tr></tfoot>
+</table>
+
+<h3>💰 القبوضات</h3>
+<table id="t2">
+  <thead>
+    <tr><th>رقم القبض</th><th>التاريخ</th><th>البيان</th><th>المبلغ ($)</th></tr>
+  </thead>
+  <tbody></tbody>
+  <tfoot><tr><td colspan="3">مجموع القبوضات</td><td id="sum2">0$</td></tr></tfoot>
+</table>
+
+<div class="summary">
+  <p>📆 التاريخ الحالي: <strong id="today"></strong></p>
+  <p>الرصيد السابق: <strong id="prev">0$</strong></p>
+  <p>مجموع الوصولات: <strong id="ops">0$</strong></p>
+  <p>مجموع القبوضات: <strong id="pay">0$</strong></p>
+  <p>💼 الرصيد النهائي: <strong id="final" style="font-size:1.4rem;color:#008d5f;">0$</strong></p>
+</div>
+
+<div style="text-align:center;">
+  <button class="print-btn" onclick="window.print()">🖨️ طباعة</button>
+  <button class="save-pdf" id="savePdf">📄 حفظ PDF (يدعم العربية)</button>
+</div>
+
+<footer>
+  © 2026 شركة الغدير للنقل والتخليص الكمركي – جميع الحقوق محفوظة
+</footer>
+
+<!-- مكتبات PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+const client = localStorage.getItem('currentClient') || 'عميل غير محدد';
+document.getElementById('clientName').textContent = 'كشف حساب: ' + client;
+
+const today = new Date();
+document.getElementById('today').textContent =
+  today.toLocaleDateString('ar-IQ', {year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'});
+
+let invoices = JSON.parse(localStorage.getItem('ghadeerInvoices') || '[]');
+let receipts = JSON.parse(localStorage.getItem('ghadeerAllReceipts') || '[]');
+let prevBalance = parseFloat(localStorage.getItem('ghadeerPrevBalance') || '0');
+
+const t1 = document.querySelector('#t1 tbody');
+const t2 = document.querySelector('#t2 tbody');
+let sum1 = 0, sum2 = 0;
+let allDates = [];
+
+// الوصولات
+invoices.forEach(inv => {
+  inv.receipts?.forEach(r => {
+    t1.innerHTML += `<tr><td>${r.id}</td><td>${r.date}</td><td>${r.driver} - ${r.car}</td><td>${r.amount.toFixed(2)}$</td></tr>`;
+    sum1 += r.amount;
+    if (r.date) allDates.push(new Date(r.date));
+  });
+});
+
+// القبوضات
+receipts.filter(r => r.client === client).forEach(rc => {
+  t2.innerHTML += `<tr><td>${rc.id}</td><td>${rc.date}</td><td>${rc.method}</td><td>${rc.amount.toFixed(2)}$</td></tr>`;
+  sum2 += rc.amount;
+  if (rc.date) allDates.push(new Date(rc.date));
+});
+
+// الفترة الزمنية
+if (allDates.length > 0) {
+  allDates.sort((a, b) => a - b);
+  const start = allDates[0].toLocaleDateString('ar-IQ');
+  const end = allDates[allDates.length - 1].toLocaleDateString('ar-IQ');
+  document.getElementById('periodText').textContent = `📆 الفترة: من ${start} إلى ${end}`;
+} else {
+  document.getElementById('periodText').textContent = `📆 لا توجد بيانات زمنية بعد`;
+}
+
+document.getElementById('sum1').textContent = sum1.toFixed(2) + '$';
+document.getElementById('sum2').textContent = sum2.toFixed(2) + '$';
+document.getElementById('prev').textContent = prevBalance.toFixed(2) + '$';
+document.getElementById('ops').textContent = sum1.toFixed(2) + '$';
+document.getElementById('pay').textContent = sum2.toFixed(2) + '$';
+const final = prevBalance + sum1 - sum2;
+document.getElementById('final').textContent = final.toFixed(2) + '$';
+
+/* ===== حفظ PDF ===== */
+document.getElementById("savePdf").addEventListener("click", async () => {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: "p", unit: "pt", format: "a4" });
+  const content = document.body;
+  const canvas = await html2canvas(content, { scale: 2, useCORS: true });
+  const imgData = canvas.toDataURL("image/png");
+  const pdfWidth = doc.internal.pageSize.getWidth();
+  const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+  doc.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+  doc.save(`كشف حساب - ${client}.pdf`);
+});
+</script>
+</body>
+</html>

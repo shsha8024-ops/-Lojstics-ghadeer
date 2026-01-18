@@ -1,0 +1,501 @@
+<!-- /invoice-details.html -->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>تفاصيل الفاتورة | شركة الغدير للنقل والتخليص المكرمي</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+
+<style>
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: "Cairo", sans-serif;
+  background: linear-gradient(180deg,#f7faff,#eef5ff);
+  color: #000;
+  direction: rtl;
+  overflow-x: hidden;
+}
+
+/* ===== الهيدر ===== */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background: linear-gradient(90deg,#002b72,#0055a5,#c2a356);
+  color: #fff;
+
+  padding: 0.7rem 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
+
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  border-bottom: 2px solid #eacb65;
+}
+
+.brand {display:flex;align-items:center;gap:10px}
+.brand img{width:52px;height:52px;object-fit:contain}
+.brand-name span{font-size:1.15rem;font-weight:900;line-height:1.1}
+.brand-name small{color:#fff8d9;font-size:0.85rem}
+
+nav{
+  position: relative;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.nav-btn{
+  color:#fff;
+  text-decoration:none;
+  font-weight: 700;
+
+  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.18);
+
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: 0.25s;
+}
+.nav-btn:hover{background: rgba(255,255,255,0.28);}
+
+/* ===== قائمة الموبايل ===== */
+.menu-toggle{
+  display: none; /* يظهر فقط بالموبايل */
+  min-width: 44px;
+  justify-content: center;
+}
+
+.mobile-menu{
+  display: none;
+  position: absolute;
+  top: calc(100% + 10px);
+  inset-inline-end: 0; /* يمين (RTL) */
+  width: min(240px, 80vw);
+
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.mobile-menu.open{display:block;}
+
+.mobile-menu button{
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 12px 12px;
+  border: 0;
+  background: #fff;
+  color: #000;
+  cursor: pointer;
+  font-weight: 800;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.mobile-menu button:last-child{border-bottom:0;}
+.mobile-menu button:hover{background:#f6f8ff;}
+
+/* موبايل: نخفي أزرار الهيدر العادية ونظهر زر القائمة */
+@media (max-width: 640px) {
+  header{
+    padding: 0.8rem 1rem;
+  }
+  .desktop-actions{
+    display: none;
+  }
+  .menu-toggle{
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+/* ===== المحتوى ===== */
+main {
+  min-height: calc(100vh - 180px);
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+h2 {
+  text-align: center;
+  color: #000;
+  border-bottom: 2px solid #c2a356;
+  display: inline-block;
+  padding-bottom: 6px;
+  margin-bottom: 2rem;
+}
+
+/* ===== الجدول ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+}
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+  color: #000;
+}
+th {background: #f4f4f4; font-weight: bold;}
+tfoot td {background: #fffbea; font-weight: bold;}
+
+/* ===== الأزرار ===== */
+.add-btn {
+  display: inline-block;
+  margin: 10px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: linear-gradient(90deg,#004b95,#008d5f);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: 0.25s;
+  font-size: 0.92rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+.add-btn:hover {background: #008d5f; transform: translateY(-1px);}
+
+.action-btn {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.25s;
+  font-size: 0.92rem;
+  line-height: 1.1;
+}
+.edit-btn {background: #00b894; color: #fff;}
+.delete-btn {background: #ff3b30; color: #fff;}
+.print-btn {background: linear-gradient(90deg,#b9973e,#f0cd63); color: #000;}
+.close-btn {background: #ccc; color: #000;}
+.action-btn:hover {opacity: 0.88;}
+
+/* ===== النوافذ ===== */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  backdrop-filter: blur(5px);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+.modal-content {
+  background: #fff;
+  border-radius: 14px;
+  padding: 1.8rem;
+  width: 90%;
+  max-width: 480px;
+  color: #000;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+.modal-content input, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #000;
+}
+.modal-content input:focus, select:focus {
+  border-color: #c2a356;
+  box-shadow: 0 0 0 3px rgba(194,163,86,0.25);
+  outline: none;
+}
+
+/* ===== الفوتر ===== */
+footer {
+  background: #fafafa;
+  text-align: center;
+  padding: 1.5rem;
+  color: #000;
+  border-top: 1px solid #ddd;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="brand">
+    <img src="ghadeer-logo.png" alt="ghadeer logo">
+    <div class="brand-name">
+      <span>شركة الغدير</span><br>
+      <small>للنقل والتخليص المكرمي</small>
+    </div>
+  </div>
+
+  <nav>
+    <!-- أزرار الديسكتوب -->
+    <div class="desktop-actions">
+      <button class="nav-btn" onclick="history.back()">🔙 رجوع</button>
+      <button class="nav-btn" onclick="window.location.href='home.html'">🏠 الرئيسية</button>
+    </div>
+
+    <!-- زر القائمة للموبايل -->
+    <button
+      id="menuToggle"
+      class="nav-btn menu-toggle"
+      type="button"
+      aria-haspopup="true"
+      aria-expanded="false"
+      aria-controls="mobileMenu"
+      title="القائمة"
+    >☰</button>
+
+    <!-- قائمة الموبايل -->
+    <div id="mobileMenu" class="mobile-menu" role="menu" aria-label="قائمة التنقل">
+      <button type="button" role="menuitem" onclick="history.back()">🔙 رجوع</button>
+      <button type="button" role="menuitem" onclick="window.location.href='home.html'">🏠 الرئيسية</button>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <h2 id="invTitle">تفاصيل الفاتورة</h2>
+  <button class="add-btn" onclick="openModal()">+ إضافة وصل جديد</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>رقم الوصل</th>
+        <th>التاريخ</th>
+        <th>اسم السائق</th>
+        <th>رقم السيارة</th>
+        <th>المحافظة</th>
+        <th>ملاحظة</th>
+        <th>المبلغ ($)</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+    <tfoot>
+      <tr><td colspan="6">إجمالي الوصولات</td><td id="total">0$</td></tr>
+    </tfoot>
+  </table>
+</main>
+
+<!-- نافذة الإضافة / التعديل -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <h3 id="modalTitle">إضافة وصل جديد</h3>
+    <label>التاريخ</label>
+    <input type="date" id="rDate">
+    <label>اسم السائق</label>
+    <input type="text" id="rDriver">
+    <label>رقم السيارة</label>
+    <input type="text" id="rCar">
+    <label>المحافظة</label>
+    <select id="rCity">
+      <option>أربيل</option>
+      <option>دهوك</option>
+      <option>سليمانية</option>
+      <option>نينوى</option>
+      <option>أنبار</option>
+    </select>
+    <label>ملاحظة</label>
+    <input type="text" id="rNote">
+    <label>المبلغ ($)</label>
+    <input type="number" id="rAmount" value="0">
+    <button class="add-btn" id="saveBtn" onclick="saveReceipt()">حفظ الوصل</button>
+    <button class="close-btn action-btn" onclick="closeModal()">إلغاء</button>
+  </div>
+</div>
+
+<!-- نافذة التفاصيل والطباعة -->
+<div id="viewModal" class="modal">
+  <div class="modal-content">
+    <div style="text-align:center;border-bottom:2px solid #c2a356;padding-bottom:10px;">
+      <img src="ghadeer-logo.png" style="width:80px;height:80px;"><br>
+      <strong style="font-size:1.2rem;color:#004b95;">شركة الغدير للنقل والتخليص المكرمي</strong><br>
+      <span style="color:#c2a356;">وصل رسمي</span>
+    </div>
+    <div id="receiptDetails" style="margin-top:10px;line-height:1.8;text-align:right;"></div>
+    <button class="edit-btn action-btn" onclick="editCurrent()">✏️ تعديل الوصل</button>
+    <button class="delete-btn action-btn" onclick="deleteCurrent()">🗑️ حذف الوصل</button>
+    <button class="print-btn action-btn" onclick="window.location.href='invoice-pdf.html'">🖨️ طباعة PDF</button>
+    <button class="close-btn action-btn" onclick="closeView()">❌ إغلاق</button>
+  </div>
+</div>
+
+<footer>
+  © 2026 شركة الغدير للنقل والتخليص المكرمي – جميع الحقوق محفوظة
+</footer>
+
+<script>
+/* ===== منطق قائمة الموبايل ===== */
+(function initMobileMenu(){
+  const toggle = document.getElementById('menuToggle');
+  const menu = document.getElementById('mobileMenu');
+
+  if (!toggle || !menu) return;
+
+  const openMenu = () => {
+    menu.classList.add('open');
+    toggle.setAttribute('aria-expanded', 'true');
+  };
+
+  const closeMenu = () => {
+    menu.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  };
+
+  const isOpen = () => menu.classList.contains('open');
+
+  toggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    isOpen() ? closeMenu() : openMenu();
+  });
+
+  document.addEventListener('click', () => {
+    if (isOpen()) closeMenu();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen()) closeMenu();
+  });
+
+  // لو المستخدم ضغط عنصر داخل القائمة، نسكرها
+  menu.addEventListener('click', () => closeMenu());
+})();
+
+/* ===== كود الفواتير ===== */
+const invId = new URLSearchParams(window.location.search).get('id') || 'فاتورة-001';
+document.getElementById('invTitle').textContent = `تفاصيل ${invId}`;
+
+let invoices = JSON.parse(localStorage.getItem('ghadeerInvoices') || '[]');
+let invoice = invoices.find(i => i.id === invId);
+if (!invoice) {
+  invoice = { id: invId, receipts: [], total: 0 };
+  invoices.push(invoice);
+}
+let editIndex = null;
+let currentView = null;
+
+function render() {
+  const tbody = document.getElementById('tbody');
+  tbody.innerHTML = '';
+  let total = 0;
+  invoice.receipts.forEach((r, i) => {
+    total += r.amount;
+    tbody.innerHTML += `
+      <tr>
+        <td style="cursor:pointer;color:#004b95;" onclick="viewReceipt(${i})">${r.id}</td>
+        <td>${r.date}</td>
+        <td>${r.driver}</td>
+        <td>${r.car}</td>
+        <td>${r.city}</td>
+        <td>${r.note}</td>
+        <td>${r.amount.toFixed(2)}$</td>
+      </tr>`;
+  });
+  document.getElementById('total').textContent = total.toFixed(2) + '$';
+  invoice.total = total;
+  localStorage.setItem('ghadeerInvoices', JSON.stringify(invoices));
+}
+
+function openModal() {
+  editIndex = null;
+  document.getElementById('modalTitle').textContent = 'إضافة وصل جديد';
+  document.getElementById('saveBtn').textContent = 'حفظ الوصل';
+  document.getElementById('rDate').value = new Date().toISOString().split('T')[0];
+  document.getElementById('rDriver').value = '';
+  document.getElementById('rCar').value = '';
+  document.getElementById('rCity').value = 'أربيل';
+  document.getElementById('rNote').value = '';
+  document.getElementById('rAmount').value = 0;
+  document.getElementById('modal').style.display = 'flex';
+}
+function closeModal() { document.getElementById('modal').style.display = 'none'; }
+
+function saveReceipt() {
+  const date = document.getElementById('rDate').value;
+  const driver = document.getElementById('rDriver').value.trim();
+  const car = document.getElementById('rCar').value.trim();
+  const city = document.getElementById('rCity').value;
+  const note = document.getElementById('rNote').value.trim() || '—';
+  const amount = parseFloat(document.getElementById('rAmount').value) || 0;
+  if (!driver || !car) return alert('يرجى إدخال اسم السائق ورقم السيارة');
+
+  if (editIndex !== null) {
+    invoice.receipts[editIndex] = { ...invoice.receipts[editIndex], date, driver, car, city, note, amount };
+  } else {
+    const nextId = 'RCPT-' + String(invoice.receipts.length + 1).padStart(3, '0');
+    invoice.receipts.push({ id: nextId, date, driver, car, city, note, amount });
+  }
+
+  localStorage.setItem('ghadeerInvoices', JSON.stringify(invoices));
+  closeModal();
+  render();
+}
+
+function viewReceipt(i) {
+  currentView = i;
+  const r = invoice.receipts[i];
+  localStorage.setItem('selectedReceipt', JSON.stringify({ invoiceId: invId, ...r, total: invoice.total }));
+  document.getElementById('receiptDetails').innerHTML = `
+    <b>رقم الوصل:</b> ${r.id}<br>
+    <b>التاريخ:</b> ${r.date}<br>
+    <b>اسم السائق:</b> ${r.driver}<br>
+    <b>رقم السيارة:</b> ${r.car}<br>
+    <b>المحافظة:</b> ${r.city}<br>
+    <b>ملاحظة:</b> ${r.note}<br>
+    <b>المبلغ:</b> ${r.amount.toFixed(2)}$
+  `;
+  document.getElementById('viewModal').style.display = 'flex';
+}
+
+function editCurrent() {
+  if (currentView === null) return;
+  const r = invoice.receipts[currentView];
+  editIndex = currentView;
+  closeView();
+  document.getElementById('rDate').value = r.date;
+  document.getElementById('rDriver').value = r.driver;
+  document.getElementById('rCar').value = r.car;
+  document.getElementById('rCity').value = r.city;
+  document.getElementById('rNote').value = r.note;
+  document.getElementById('rAmount').value = r.amount;
+  document.getElementById('modalTitle').textContent = 'تعديل الوصل';
+  document.getElementById('saveBtn').textContent = 'حفظ التعديلات';
+  document.getElementById('modal').style.display = 'flex';
+}
+
+function deleteCurrent() {
+  if (currentView === null) return;
+  if (confirm('هل أنت متأكد من حذف هذا الوصل؟')) {
+    invoice.receipts.splice(currentView, 1);
+    localStorage.setItem('ghadeerInvoices', JSON.stringify(invoices));
+    closeView();
+    render();
+  }
+}
+
+function closeView() { document.getElementById('viewModal').style.display = 'none'; }
+
+render();
+</script>
+</body>
+</html>

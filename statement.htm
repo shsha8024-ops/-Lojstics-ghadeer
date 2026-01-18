@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>كشف حساب عام | شركة الغدير للنقل والتخليص الكمركي</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: "Cairo", sans-serif;
+  background: linear-gradient(180deg,#f7faff,#eef5ff);
+  color: #000;
+  direction: rtl;
+  overflow-x: hidden;
+}
+
+/* ===== الهيدر ===== */
+header {
+  background: linear-gradient(90deg,#003366,#004b95);
+  color: #fff;
+  padding: 1.2rem 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 3px solid #c2a356;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+.brand {display:flex;align-items:center;gap:14px}
+.brand img{width:70px;height:70px;object-fit:contain}
+.brand-name span{font-size:1.5rem;font-weight:900}
+.brand-name small{color:#f8e9b3;font-size:.95rem}
+
+/* ===== زر الرجوع في الهيدر ===== */
+.back-btn {
+  background: linear-gradient(90deg,#004b95,#008d5f);
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+.back-btn:hover {
+  background: #008d5f;
+}
+
+/* ===== المحتوى ===== */
+main {
+  min-height: calc(100vh - 180px);
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+h2 {
+  text-align: center;
+  color: #004b95;
+  border-bottom: 2px solid #c2a356;
+  display: inline-block;
+  padding-bottom: 6px;
+  margin-bottom: 1.5rem;
+}
+
+/* ===== البحث ===== */
+.search-bar {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.search-bar input {
+  width: 70%;
+  max-width: 400px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  color: #000;
+  background: #fff;
+}
+.search-bar input:focus {
+  border-color: #c2a356;
+  box-shadow: 0 0 0 3px rgba(194,163,86,0.25);
+  outline: none;
+}
+
+/* ===== الجدول ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  margin-bottom: 2rem;
+}
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+th {background: #f2f6fb;color:#003366;font-weight:700;}
+tfoot td {background:#fffbea;font-weight:bold;color:#000;}
+
+/* ===== الأزرار ===== */
+.view-btn {
+  background: linear-gradient(90deg,#004b95,#008d5f);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.view-btn:hover {
+  background: #008d5f;
+  transform: scale(1.05);
+}
+.buttons {
+  text-align: center;
+  margin: 1.5rem 0;
+}
+button {
+  margin: 0.4rem;
+  padding: 10px 24px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.pdf-btn {background:linear-gradient(90deg,#b9973e,#f0cd63);color:#000;}
+.history-btn {background:#0077cc;color:#fff;}
+button:hover {transform:scale(1.05);}
+
+/* ===== الفوتر ===== */
+footer {
+  background:#fafafa;
+  text-align:center;
+  padding:1.5rem;
+  color:#000;
+  border-top:1px solid #ddd;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <img src="ghadeer-logo.png" alt="ghadeer logo">
+    <div class="brand-name">
+      <span>شركة الغدير</span><br>
+      <small>للنقل والتخليص الكمركي</small>
+    </div>
+  </div>
+  <button class="back-btn" onclick="window.location.href='home.html'">🏠 الرئيسية</button>
+</header>
+
+<main id="pdfContent">
+  <h2>📊 كشف حساب عام لجميع العملاء</h2>
+
+  <div class="search-bar">
+    <input type="text" id="searchBox" placeholder="🔍 ابحث عن عميل...">
+  </div>
+
+  <table id="accountTable">
+    <thead>
+      <tr>
+        <th>العميل</th>
+        <th>الرصيد السابق ($)</th>
+        <th>مجموع الوصولات ($)</th>
+        <th>مجموع القبوضات ($)</th>
+        <th>الرصيد النهائي ($)</th>
+        <th>التفاصيل</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+    <tfoot>
+      <tr>
+        <td><b>الإجماليات العامة</b></td>
+        <td id="totalPrev">0$</td>
+        <td id="totalOps">0$</td>
+        <td id="totalPays">0$</td>
+        <td id="totalFinal">0$</td>
+        <td>—</td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <div class="buttons">
+    <button class="pdf-btn" onclick="generatePDF()">📄 تصدير PDF</button>
+    <button class="history-btn" onclick="window.history.back()">↩️ رجوع</button>
+  </div>
+</main>
+
+<footer>
+  📍 زاخو – إبراهيم الخليل • 📞 07504084359 • 📧 starzeki001@gmail.com  
+  <br>© 2026 شركة الغدير للنقل والتخليص الكمركي – جميع الحقوق محفوظة
+</footer>
+
+<script>
+let clients = [];
+let invoices = [];
+let receipts = [];
+
+function renderAllAccounts(filterText = '') {
+  clients = JSON.parse(localStorage.getItem('ghadeerClients') || '[]');
+  invoices = JSON.parse(localStorage.getItem('ghadeerInvoices') || '[]');
+  receipts = JSON.parse(localStorage.getItem('ghadeerAllReceipts') || '[]');
+
+  const tbody = document.querySelector('#accountTable tbody');
+  tbody.innerHTML = '';
+
+  let totalPrev = 0, totalOps = 0, totalPays = 0, totalFinal = 0;
+
+  clients
+    .filter(c => c.name.toLowerCase().includes(filterText.toLowerCase()))
+    .forEach(client => {
+      const prevBalance = parseFloat(client.prevBalance || 0);
+      let sumOps = 0, sumPays = 0;
+
+      invoices.forEach(inv => {
+        if(inv.client === client.name){
+          inv.receipts?.forEach(r => sumOps += r.amount || 0);
+        }
+      });
+
+      receipts.filter(r => r.client === client.name).forEach(rc => {
+        sumPays += rc.amount || 0;
+      });
+
+      const final = prevBalance + sumOps - sumPays;
+      totalPrev += prevBalance;
+      totalOps += sumOps;
+      totalPays += sumPays;
+      totalFinal += final;
+
+      tbody.innerHTML += `
+        <tr>
+          <td>${client.name}</td>
+          <td>${prevBalance.toFixed(2)}$</td>
+          <td>${sumOps.toFixed(2)}$</td>
+          <td>${sumPays.toFixed(2)}$</td>
+          <td style="color:${final>=0?'#008d5f':'#d00'};font-weight:bold;">${final.toFixed(2)}$</td>
+          <td><button class="view-btn" onclick="openClient('${client.name}')">عرض</button></td>
+        </tr>`;
+    });
+
+  document.getElementById('totalPrev').textContent = totalPrev.toFixed(2)+'$';
+  document.getElementById('totalOps').textContent = totalOps.toFixed(2)+'$';
+  document.getElementById('totalPays').textContent = totalPays.toFixed(2)+'$';
+  document.getElementById('totalFinal').textContent = totalFinal.toFixed(2)+'$';
+}
+
+/* === فتح كشف عميل محدد === */
+function openClient(name){
+  localStorage.setItem('currentClient', name);
+  window.location.href = 'client-account.html';
+}
+
+/* === البحث === */
+document.getElementById('searchBox').addEventListener('input', e => {
+  renderAllAccounts(e.target.value);
+});
+
+/* === PDF === */
+function generatePDF(){
+  const element = document.getElementById('pdfContent');
+  const opt = {
+    margin: 0.5,
+    filename: 'كشف_حساب_عام_العملاء.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+  };
+  html2pdf().set(opt).from(element).save();
+}
+
+renderAllAccounts();
+</script>
+</body>
+</html>
