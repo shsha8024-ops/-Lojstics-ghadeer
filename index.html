@@ -4,29 +4,37 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>الغدير للنقل والتخليص الكمركي | GHADIR LOGISTICS</title>
-<link rel="icon" type="image/png" href="7FEDC5DA-8C53-4216-A4DB-E7118589F3EE.png">
+<title>شركة الغدير للنقل والتخليص الكمركي | GHADIR LOGISTICS</title>
+<link rel="icon" type="image/png" href="ghadeer-logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
+:root {
+  --main-blue: #003d74;
+  --dark-blue: #002b55;
+  --gold: #f0cd63;
+  --gold-dark: #b9973e;
+}
+
 body {
   font-family: 'Cairo', sans-serif;
-  background-color: #004b95; /* لون موحّد أزرق ملكي */
+  background: linear-gradient(180deg, var(--main-blue) 0%, var(--dark-blue) 100%);
   margin: 0;
   padding: 0;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   color: #fff;
   overflow: hidden;
+  animation: fadeIn 1.5s ease;
 }
 
-/* ===== الهيدر (الشعار) ===== */
+/* ===== الشعار ===== */
 header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,62 +44,75 @@ header img {
   width: 180px;
   height: auto;
   display: block;
-  margin: 0 auto 0.5rem auto; /* يضع الشعار بالمنتصف تماماً */
-  transform: translateY(5px); /* تعديل طفيف لتوازن الحرف G */
+  margin-bottom: 0.5rem;
+  filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.3));
+  transition: transform 0.3s ease;
+}
+header img:hover {
+  transform: scale(1.04);
 }
 header h1 {
   margin: 0;
-  padding: 0;
-  color: #f0cd63;
-  font-size: 1.25rem;
+  color: var(--gold);
+  font-size: 1.4rem;
   font-weight: 700;
-  letter-spacing: 0.3px;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.25);
+  letter-spacing: 0.5px;
 }
 
 /* ===== صندوق تسجيل الدخول ===== */
 .login-box {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.18);
-  border-radius: 14px;
-  padding: 2rem 2.5rem;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 20px;
+  padding: 2.5rem;
   text-align: center;
   width: 90%;
-  max-width: 360px;
-  box-shadow: 0 0 25px rgba(0,0,0,0.25);
+  max-width: 380px;
+  box-shadow: 0 0 35px rgba(0,0,0,0.3);
+  backdrop-filter: blur(15px);
+  animation: slideUp 1s ease;
 }
 h2 {
-  color: #f0cd63;
-  margin-bottom: 1rem;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+  text-shadow: 0 0 6px rgba(255, 215, 0, 0.2);
 }
 input {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   border: none;
-  border-radius: 6px;
-  margin: 8px 0;
+  border-radius: 10px;
+  margin: 12px 0;
   font-size: 1rem;
   text-align: center;
+  background: rgba(255,255,255,0.95);
+  transition: all 0.3s ease;
 }
 input:focus {
-  outline: 2px solid #c2a356;
+  outline: 2px solid var(--gold-dark);
   background-color: #fff;
   color: #000;
+  box-shadow: 0 0 12px rgba(240, 205, 99, 0.4);
 }
 button {
   width: 100%;
-  padding: 10px;
-  background: #c2a356;
+  padding: 12px;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold));
   color: #000;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   font-weight: bold;
   cursor: pointer;
-  transition: 0.3s;
-  font-size: 1rem;
+  transition: all 0.3s ease;
+  font-size: 1.05rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 button:hover {
-  background: #f0cd63;
-  transform: translateY(-2px);
+  background: linear-gradient(90deg, #f8e27a, #fff0a1);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
 }
 .error {
   color: #ffb3b3;
@@ -103,11 +124,31 @@ button:hover {
 /* ===== الفوتر ===== */
 footer {
   position: absolute;
-  bottom: 10px;
+  bottom: 12px;
   text-align: center;
   width: 100%;
-  font-size: 0.85rem;
-  color: rgba(255,255,255,0.6);
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.8);
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 4px rgba(255,255,255,0.1);
+}
+
+/* ===== الحركات ===== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideUp {
+  from { transform: translateY(80px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* ===== متجاوبة للجوال ===== */
+@media (max-width: 480px) {
+  header img { width: 140px; }
+  header h1 { font-size: 1.2rem; }
+  .login-box { padding: 2rem; }
+  h2 { font-size: 1.2rem; }
 }
 </style>
 </head>
@@ -115,7 +156,7 @@ footer {
 <body>
 
 <header>
-  <img src="7FEDC5DA-8C53-4216-A4DB-E7118589F3EE.png" alt="ghadir logistics logo">
+  <img src="ghadeer-logo.png" alt="ghadir logistics logo">
   <h1>شركة الغدير للنقل والتخليص الكمركي</h1>
 </header>
 
@@ -127,7 +168,7 @@ footer {
   <p class="error" id="error">⚠️ اسم المستخدم أو كلمة المرور غير صحيحة</p>
 </div>
 
-<footer>© 2026 شركة الغدير للنقل والتخليص الكمركي</footer>
+<footer>© 2026 شركة الغدير للنقل والتخليص الكمركي – جميع الحقوق محفوظة</footer>
 
 <script>
 function login() {
@@ -148,5 +189,6 @@ if (localStorage.getItem("loggedIn") === "true") {
   window.location.href = "home.html";
 }
 </script>
+
 </body>
 </html>
