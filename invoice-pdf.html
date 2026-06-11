@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>طباعة الوصلة | شركة الغدير</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+<style>
+body{font-family:'Cairo',sans-serif;background:#f7faff;color:#000;margin:0;padding:2rem;}
+header{position:sticky;top:0;background:#004b95;color:#fff;padding:1rem;border-radius:0 0 0 0;display:flex;justify-content:space-between;align-items:center;gap:1rem;}
+button{background:linear-gradient(90deg,#004b95,#008d5f);color:#fff;border:none;padding:0.8rem 1rem;border-radius:10px;cursor:pointer;}
+main{max-width:900px;margin:2rem auto;background:#fff;padding:1.5rem;border-radius:18px;box-shadow:0 14px 30px rgba(0,0,0,0.08);}
+table{width:100%;border-collapse:collapse;margin-top:1rem;}
+th,td{padding:10px;border:1px solid #ddd;text-align:right;}
+.summary{margin-top:1.5rem;font-weight:800;color:#004b95;}
+.no-data{padding:2rem;text-align:center;color:#555;}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>طباعة الوصلة</h1>
+    <p style="margin:0;font-size:0.9rem;">شركة الغدير للنقل والتخليص الكمركي</p>
+  </div>
+  <button type="button" onclick="history.back()">🔙 رجوع</button>
+</header>
+<main>
+  <div id="content"></div>
+  <div style="text-align:center;margin-top:1.5rem;">
+    <button type="button" onclick="window.print()">🖨️ طباعة</button>
+  </div>
+</main>
+<footer style="text-align:center;margin-top:2rem;color:#777;font-size:0.9rem;">© 2026 شركة الغدير للنقل والتخليص الكمركي</footer>
+<script>
+const stored = localStorage.getItem('selectedReceipt');
+const content = document.getElementById('content');
+const receipt = stored ? JSON.parse(stored) : null;
+if (!receipt) {
+  content.innerHTML = '<div class="no-data">لا توجد وصلية محفوظة للطباعة. الرجاء العودة وإنشاء أو اختيار وصلية.</div>';
+} else {
+  const clientName = localStorage.getItem('currentClientName') || receipt.clientId || 'عميل غير محدد';
+  const now = new Date();
+  content.innerHTML = `
+    <section style="text-align:center;">
+      <h2>وصل رسمي</h2>
+      <p>العميل: <strong>${clientName}</strong></p>
+      <p>رقم الوصل: <strong>${receipt.id || '—'}</strong></p>
+      <p>التاريخ: <strong>${receipt.date || '—'}</strong></p>
+    </section>
+    <table>
+      <tr><th>اسم السائق</th><td>${receipt.driver || '—'}</td></tr>
+      <tr><th>رقم السيارة</th><td>${receipt.car || '—'}</td></tr>
+      <tr><th>المحافظة</th><td>${receipt.city || '—'}</td></tr>
+      <tr><th>ملاحظة</th><td>${receipt.note || '—'}</td></tr>
+      <tr><th>المبلغ ($)</th><td>${Number(receipt.amount || 0).toFixed(2)}$</td></tr>
+    </table>
+    <div class="summary">
+      <p>الرصيد الإجمالي للفاتورة: <strong>${Number(receipt.total || 0).toFixed(2)}$</strong></p>
+      <p>تاريخ الطباعة: <strong>${now.toLocaleDateString('ar-IQ')} ${now.toLocaleTimeString('ar-IQ')}</strong></p>
+    </div>
+  `;
+}
+</script>
+</body>
+</html>
