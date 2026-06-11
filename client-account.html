@@ -219,7 +219,7 @@ URL: client-account.html?client=CLIENT-001
     <button class="btn" type="button" id="saveOpeningBtn">💾 حفظ الرصيد القديم</button>
   </div>
 
- <a class="btn primary" href="pdf.html">📉PDF</a>
+ <a class="btn primary" id="pdfLink" href="#">📉PDF</a>
 
 
   <div class="cards">
@@ -413,6 +413,12 @@ URL: client-account.html?client=CLIENT-001
       <div><b>الشركة:</b> ${c.company || '—'} &nbsp; | &nbsp; <b>الهاتف:</b> ${c.phone || '—'}</div>
     `;
     openingInput.value = Number(c.openingBalance || 0);
+    localStorage.setItem('currentClient', c.id);
+    localStorage.setItem('currentClientName', c.name);
+    const pdfLink = document.getElementById('pdfLink');
+    if (pdfLink) {
+      pdfLink.href = `pdf.html?client=${encodeURIComponent(c.id)}`;
+    }
   }
 
   function buildMovements(opening){

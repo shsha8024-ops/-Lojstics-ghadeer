@@ -166,7 +166,12 @@ footer {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-const client = localStorage.getItem('currentClient') || 'عميل غير محدد';
+const qs = new URLSearchParams(window.location.search);
+const queryClient = qs.get('client');
+const client = queryClient || localStorage.getItem('currentClient') || 'عميل غير محدد';
+if (queryClient) {
+  localStorage.setItem('currentClient', queryClient);
+}
 document.getElementById('clientName').textContent = 'كشف حساب: ' + client;
 const today = new Date();
 document.getElementById('today').textContent =
