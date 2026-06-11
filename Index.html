@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles.css">
 
 <title>شركة الغدير للنقل والتخليص الكمركي | GHADIR LOGISTICS</title>
 <link rel="icon" type="image/png" href="ghadeer-logo.png">
@@ -10,146 +11,77 @@
 
 <style>
 :root {
-  --main-blue: #003d74;
-  --dark-blue: #002b55;
-  --gold: #f0cd63;
-  --gold-dark: #b9973e;
+  --space: 1.1rem;
+  --bg: #050c1d;
+  --bg-soft: rgba(255,255,255,0.08);
+  --surface: rgba(255,255,255,0.08);
+  --border: rgba(255,255,255,0.16);
+  --text: #eef3ff;
+  --muted: #9fb5d2;
+  --accent: #66d0ff;
+  --accent-strong: #ffca3a;
+  --shadow: 0 20px 60px rgba(0,0,0,0.35);
 }
-
-body {
-  font-family: 'Cairo', sans-serif;
-  background: linear-gradient(180deg, var(--main-blue) 0%, var(--dark-blue) 100%);
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  overflow: hidden;
-  animation: fadeIn 1.5s ease;
+*{box-sizing:border-box;}
+html,body{min-height:100%;margin:0;padding:0;scroll-behavior:smooth;}
+body{
+  font-family:'Cairo',sans-serif;
+  color: var(--text);
+  background: radial-gradient(circle at top left, rgba(102,208,255,0.18), transparent 24%),
+              radial-gradient(circle at bottom right, rgba(255,202,58,0.16), transparent 22%),
+              linear-gradient(180deg,#071028 0%,#01060f 100%);
+  overflow-x:hidden;
 }
-
-/* ===== الشعار ===== */
-header {
-  text-align: center;
-  margin-bottom: 2.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background: radial-gradient(circle at 20% 15%, rgba(102,208,255,0.14), transparent 16%),
+              radial-gradient(circle at 80% 25%, rgba(255,202,58,0.11), transparent 12%);
+  pointer-events:none;
 }
-header img {
-  width: 180px;
-  height: auto;
-  display: block;
-  margin-bottom: 0.5rem;
-  filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.3));
-  transition: transform 0.3s ease;
+header{width:100%;max-width:420px;margin:0 auto 1.5rem;padding:0 1rem;display:flex;flex-direction:column;align-items:center;gap:.75rem;}
+header img{width:130px;height:auto;filter:drop-shadow(0 0 28px rgba(102,208,255,0.35));}
+header h1{margin:0;font-size:1.7rem;font-weight:900;text-align:center;letter-spacing:.3px;}
+header p{margin:0;color:var(--muted);font-size:0.98rem;line-height:1.6;text-align:center;max-width:320px;}
+.login-box{
+  width:min(100%,420px);
+  padding:2rem;
+  border-radius:28px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.05));
+  backdrop-filter: blur(20px);
+  border:1px solid var(--border);
+  box-shadow: var(--shadow);
 }
-header img:hover {
-  transform: scale(1.04);
+.login-box h2{margin:0 0 1.5rem;font-size:1.5rem;color:#fff;}
+input{
+  width:100%;
+  padding:1rem 1.1rem;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.08);
+  color:#fff;
+  font-size:1rem;
+  margin:0.75rem 0;
 }
-header h1 {
-  margin: 0;
-  color: var(--gold);
-  font-size: 1.4rem;
-  font-weight: 700;
-  text-shadow: 0 0 10px rgba(255, 215, 0, 0.25);
-  letter-spacing: 0.5px;
+input::placeholder{color:rgba(255,255,255,0.62);}
+input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(102,208,255,0.15);background:rgba(255,255,255,0.12);}
+button{
+  width:100%;
+  padding:1rem;
+  border:none;
+  border-radius:18px;
+  font-size:1rem;
+  font-weight:700;
+  color:#08101d;
+  background: linear-gradient(135deg, #66d0ff, #f7ce5c);
+  cursor:pointer;
+  transition:transform .25s ease, box-shadow .25s ease;
 }
-
-/* ===== صندوق تسجيل الدخول ===== */
-.login-box {
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 20px;
-  padding: 2.5rem;
-  text-align: center;
-  width: 90%;
-  max-width: 380px;
-  box-shadow: 0 0 35px rgba(0,0,0,0.3);
-  backdrop-filter: blur(15px);
-  animation: slideUp 1s ease;
-}
-h2 {
-  color: var(--gold);
-  margin-bottom: 1.5rem;
-  font-size: 1.4rem;
-  text-shadow: 0 0 6px rgba(255, 215, 0, 0.2);
-}
-input {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
-  margin: 12px 0;
-  font-size: 1rem;
-  text-align: center;
-  background: rgba(255,255,255,0.95);
-  transition: all 0.3s ease;
-}
-input:focus {
-  outline: 2px solid var(--gold-dark);
-  background-color: #fff;
-  color: #000;
-  box-shadow: 0 0 12px rgba(240, 205, 99, 0.4);
-}
-button {
-  width: 100%;
-  padding: 12px;
-  background: linear-gradient(90deg, var(--gold-dark), var(--gold));
-  color: #000;
-  border: none;
-  border-radius: 12px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 1.05rem;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
-button:hover {
-  background: linear-gradient(90deg, #f8e27a, #fff0a1);
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-}
-.error {
-  color: #ffb3b3;
-  margin-top: 10px;
-  font-size: 0.9rem;
-  display: none;
-}
-
-/* ===== الفوتر ===== */
-footer {
-  position: absolute;
-  bottom: 12px;
-  text-align: center;
-  width: 100%;
-  font-size: 0.9rem;
-  color: rgba(255,255,255,0.8);
-  letter-spacing: 0.5px;
-  text-shadow: 0 0 4px rgba(255,255,255,0.1);
-}
-
-/* ===== الحركات ===== */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-@keyframes slideUp {
-  from { transform: translateY(80px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-/* ===== متجاوبة للجوال ===== */
-@media (max-width: 480px) {
-  header img { width: 140px; }
-  header h1 { font-size: 1.2rem; }
-  .login-box { padding: 2rem; }
-  h2 { font-size: 1.2rem; }
-}
+button:hover{transform:translateY(-2px);box-shadow:0 18px 35px rgba(102,208,255,0.22);}
+.error{display:none;margin-top:1rem;color:#ff99a3;font-size:0.95rem;}
+footer{width:100%;max-width:420px;margin:1.5rem auto 0;text-align:center;font-size:0.9rem;color:rgba(255,255,255,0.65);line-height:1.6;padding:0 1rem;}
+@media (max-width:500px){header{padding-inline:1rem;}header img{width:110px;}header h1{font-size:1.4rem;} .login-box{padding:1.5rem;border-radius:22px;}button{padding:.95rem;}}
 </style>
 </head>
 
