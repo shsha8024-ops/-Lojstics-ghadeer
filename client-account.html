@@ -245,6 +245,8 @@ URL: client-account.html?client=CLIENT-001
     </div>
   </div>
 
+  <a class="btn primary" id="pdfLink" href="#">📉PDF</a>
+
   <div class="section">
     <h3>حركات الحساب (مرتب بالتاريخ)</h3>
     <div class="table-wrap">
@@ -354,7 +356,7 @@ URL: client-account.html?client=CLIENT-001
 
   // menu actions
   document.getElementById('mBack').addEventListener('click', () => { closeMenu(); history.back(); });
-  document.getElementById('mClients').addEventListener('click', () => { closeMenu(); window.location.href='clients.html'; });
+  document.getElementById('mClients').addEventListener('click', () => { closeMenu(); window.location.href='client.html'; });
   document.getElementById('mPayments').addEventListener('click', () => {
     closeMenu();
     window.location.href = `client-receipts.html?client=${encodeURIComponent(clientId)}`;
